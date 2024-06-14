@@ -1,0 +1,12 @@
+
+
+http:
+  get:
+    timeout: 30
+  post:
+    timeout: 20
+
+
+validation:
+  args:
+    max-length: 10
