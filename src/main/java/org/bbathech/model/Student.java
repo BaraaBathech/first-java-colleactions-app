@@ -1,10 +1,10 @@
-package org.bbathech;
+package org.bbathech.model;
 
 import java.util.Objects;
 
-public class Person {
+public class Student {
 
-    public Person(int id, int age, String name) {
+    public Student(int id, int age, String name) {
         this.id = id;
         this.age = age;
         this.name = name;
@@ -41,7 +41,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "Student{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
@@ -52,8 +52,8 @@ public class Person {
     public boolean equals(Object otherPerson) {
 //        if (this == o) return true;
 //        if (o == null || getClass() != o.getClass()) return false;
-        Person person = (Person) otherPerson;
-        return id == person.id;
+        Student student = (Student) otherPerson;
+        return id == student.id;
     }
 
     @Override

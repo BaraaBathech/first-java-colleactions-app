@@ -1,6 +1,9 @@
 package org.bbathech;
 
+import org.bbathech.data.CourseResults;
+import org.bbathech.model.Student;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -11,157 +14,61 @@ public class Main {
         // to see how IntelliJ IDEA suggests fixing it.
         System.out.println("Hello and welcome!");
 
-//        final int getTimeout = new Configuration().getParameter("http.get.timeout");
+//        Collections.examples();
 
-//        final String dbTimeout = "10 seconds";
-//        for (int i = 0; i < args.length; i++) {
-//            System.out.println(args[i]);
-//        }
-//
-//        for (String arg: args) {
-//            System.out.println(arg);
-//        }
-//
-//        for (int i = 1; i <= 5; i++) {
-//            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-//            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-//            System.out.println("i = " + i);
-//        }
+        System.out.println(squareSum(Arrays.asList(6, 7, 8, 20, 100)));
+        System.out.println(removeDuplicates(Arrays.asList("6", "6", "7")));
 
-        // Lists
-        listOfStrings();
-        listOfPersons();
+        final Map<Integer, Student> studentMap = new HashMap<>();
+        studentMap.put(1, new Student(1, 20, "A"));
+        studentMap.put(2, new Student(2, 30, "B"));
+        studentMap.put(3, new Student(3, 40, "C"));
+        studentMap.put(4, new Student(1, 50, "D"));
 
-        // Sets
-        setOfStrings();
-        setOfPersons();
+        System.out.println(addBonusMarks(studentMap, new HashSet<>(Arrays.asList(1, 2, 5))));
 
-        // Maps
-        mapOfStrings();
-
-
-
+        printStudentTotals(Arrays.asList(new Student(19, 20, "Ahmad"), new Student(17, 20, "Abd")));
     }
 
-    private static void mapOfStrings() {
-        System.out.println("PRINTING MAPS");
-        final Map<Integer, Person> personMap = new HashMap<>();
+    // Example: Write a method that receives a list of Integers and returns the sum of the square of all integers above 10
+    private static Integer squareSum(List<Integer> integerList) {
+//        Integer sum = 0;
+//        for (Integer element: integerList) {
+//            if (element > 10) {
+//                sum += element * element;
+//            }
+//        }
+//        return sum;
 
-        personMap.put(15, new Person(15, 50, "soso"));
-        personMap.put(77, new Person(77, 13, "foso"));
-        personMap.put(225, new Person(225, 16, "aoso"));
-        personMap.put(1333, new Person(1333, 20, "yoso"));
-        personMap.put(1333, new Person(1333, 23, "toso"));
-
-
-        System.out.println(personMap.get(77));
-        System.out.println(personMap.get(88));
-        System.out.println(personMap.get(1333));
+        return integerList.stream().filter(it -> it > 10).mapToInt(it -> it * it).sum();
     }
-
-    private static void setOfPersons() {
-        final Set<Person> personSet = new HashSet<>();
-
-        personSet.add(new Person(5, 50, "Lolo"));
-        personSet.add(new Person(15, 44, "Soso"));
-        personSet.add(new Person(15, 44, "Soso"));
-
-        for (Person p: personSet) {
-            if (p.getId() == 15) {
-                System.out.println("The person with id=15 is:" + p);
+    // Example: Write a method that uses a set to remove duplicate elements of a list and returns the duplicate-free set.
+    private static Set<String> removeDuplicates(List<String> input) {
+        return new HashSet<>(input);
+    }
+    // Example: Write a method that receives a Map of StudentId to Student, and a Set of StudentIds where they should get a bonus of 5 marks.
+    // The method returns the map modified
+    private static Map<Integer, Student> addBonusMarks(Map<Integer, Student> studentMap, Set<Integer> idsToGetBonus) {
+        for (Integer idToGetBonus: idsToGetBonus) {
+            if (studentMap.containsKey(idToGetBonus)) {
+                Student oldStudent = studentMap.get(idToGetBonus);
+                oldStudent.setAge(oldStudent.getAge() + 5);
+//                studentMap.put(idToGetBonus, oldStudent);
             }
         }
-
-        System.out.println(personSet);
-
+        return studentMap;
     }
-
-    private static void setOfStrings() {
-
-        // Unordered
-        // No duplicates
-
-        System.out.println("PRINTING SETS");
-        final Set<String> setOfStrings = new HashSet<>();
-
-        boolean firstAdded = setOfStrings.add("1");
-        boolean secondAdded = setOfStrings.add("1");
-        setOfStrings.add("2");
-        setOfStrings.add("3");
-        setOfStrings.add("4");
-        setOfStrings.add("5");
-        setOfStrings.add("6");
-        setOfStrings.add("7");
-        setOfStrings.add("8");
-        setOfStrings.add(null);
-        setOfStrings.add(null);
-
-        System.out.println(setOfStrings);
-        System.out.println("firstAdded=" + firstAdded);
-        System.out.println("secondAdded=" + secondAdded);
-
-        // To read, you should just loop over, no index.
-    }
-
-    private static void listOfPersons() {
-
-        System.out.println("PRINTING LISTS");
-        final List<Person> persons = new ArrayList<>();
-
-        persons.add(new Person(1, 50, "Abood"));
-        persons.add(new Person(17, 15, "Baraa"));
-        persons.add(new Person(18, 11, "Lolo"));
-        persons.add(new Person(70, 35, "Soso"));
-        persons.add(new Person(100, 70, "Fofo"));
-
-        for (Person person: persons) {
-            System.out.println(person);
+    // Example: Write a method that receives a list of Students and CourseResults and prints the Name and total of each Student.
+    private static void printStudentTotals(List<Student> students) {
+        for (Student student: students) {
+            AtomicInteger sum = new AtomicInteger();
+            CourseResults.results.forEach((course, studentIdToScoreMap) -> {
+                Integer score = studentIdToScoreMap.get(student.getId());
+                if (score != null) {
+                    sum.set(sum.get() + score);
+                }
+            });
+            System.out.println("Student: " + student.getName() + " scored: " + sum);
         }
-
-        Person elli3omro70 = null;
-        for (Person p: persons) {
-            if (p.getId() == 70) {
-                elli3omro70 = p;
-            }
-        }
-        System.out.println(elli3omro70);
-        System.out.println(persons.get(3));
     }
-
-    private static void listOfStrings() {
-        final List<String> stringList = new ArrayList<>(); // LinkedList<>()
-        // List: Ordered .... add(1)... add(2)
-        // Duplicates allowed
-
-        stringList.add("1");
-        stringList.add("3");
-        stringList.add("3");
-        stringList.add("3");
-        stringList.add("3");
-        stringList.add("3");
-        stringList.add("5");
-
-        //stringList = new ArrayList<>();
-
-        System.out.println(stringList);
-        for (String listElem: stringList) {
-            System.out.print(listElem);
-        }
-
-        stringList.add("7");
-
-        System.out.println(stringList);
-
-        stringList.add(null);
-
-        System.out.println(stringList);
-
-        stringList.add(null);
-
-        System.out.println(stringList);
-
-        System.out.println(stringList.get(1));
-    }
-
-
 }
