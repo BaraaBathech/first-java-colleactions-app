@@ -1,6 +1,7 @@
 package org.bbathech;
 
 import org.bbathech.data.CourseResults;
+import org.bbathech.functional.FunctionalInterface;
 import org.bbathech.model.Student;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -16,6 +17,14 @@ public class Main {
 
 //        Collections.examples();
 
+//        collectionExamples();
+
+
+        FunctionalInterface.execute();
+
+    }
+
+    private static void collectionExamples() {
         System.out.println(squareSum(Arrays.asList(6, 7, 8, 20, 100)));
         System.out.println(removeDuplicates(Arrays.asList("6", "6", "7")));
 

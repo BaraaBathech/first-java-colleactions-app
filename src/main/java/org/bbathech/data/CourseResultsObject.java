@@ -5,12 +5,11 @@ import org.bbathech.model.Course;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CourseResults {
+public class CourseResultsObject {
 
-    public static Map<Course, Map<Integer, Integer>> results = new HashMap<>();
+    private Map<Course, Map<Integer, Integer>> results = new HashMap<>();
 
-    static {
-
+    {
         final Map<Integer, Integer> mathResults = new HashMap<>();
         mathResults.put(11, 70);
         mathResults.put(17, 92);
@@ -36,7 +35,9 @@ public class CourseResults {
         results.put(Course.SCIENCE, scienceResults);
     }
 
-    // Class level variables >> static
-    // Object level variables >> Instance (new)
+    public Map<Course, Map<Integer, Integer>> getResults() {
+        return results;
+    }
+
 
 }
